@@ -1,0 +1,18 @@
+{
+	"name": "@m4rch/4css",
+	"version": "0.1.0",
+	"description": "a simple css compiler for a very specific custom type of css",
+	"author": "m4rch",
+	"main": "src/index.js",
+	"keywords": [
+		"m4rch",
+		"4css",
+		"css"
+	],
+	"bin": {
+		"@m4rch/4css": "bin/cli.js",
+		"4css": "bin/cli.js"
+	},
+	"license": "Unlicense",
+	"type": "module"
+}

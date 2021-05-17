@@ -1,0 +1,13 @@
+[ general ]
+	- sort files
+[ content ]
+	- resolve
+	- generate
+	- mixin declaration properties
+	- shortcuts
+	- svelte plugin
+	- shortcut symbols
+[ bugs ]
+[ misc ]
+	- more precise errors
+	- basic checks for selectors
