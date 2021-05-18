@@ -1,15 +1,13 @@
 export const dict = {
-	mg: "margin",
-	pd: "padding",
 	bd: "border",
 	bg: "background",
 	cl: "color",
 	d: "display",
-	p: "position"
+	mg: "margin",
+	p: "position",
+	pd: "padding"
 }
 
 export function lookup ( prop ) {
-	let nProp = dict[prop]
-
-	return nProp || prop
+	return dict[prop] || prop
 }

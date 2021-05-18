@@ -6,7 +6,7 @@
 	- mixin declaration properties
 	- shortcuts
 	- svelte plugin
-	- shortcut symbols
+	- shortcut properties/vars
 [ bugs ]
 [ misc ]
 	- more precise errors

@@ -1,7 +1,9 @@
-import { readdirSync, lstatSync, existsSync } from "fs"
+import { existsSync, lstatSync, readdirSync, readFileSync } from "fs"
 import { join } from "path"
 
 export function recursive ( path ) {
+	if (!existsSync(path) || !lstatSync(path).isDirectory()) return []
+
 	let files = []
 	let folders = []
 
@@ -10,7 +12,7 @@ export function recursive ( path ) {
 	if (typeof callback == "function") callback(files, folders)
 	return files
 
-	function r (path) {
+	function r ( path ) {
 		let all = readdirSync(path)
 		let current = all.filter(( item ) => lstatSync(join(path, item)).isDirectory()).filter(( folder ) => folder != "node_mdoules")
 
@@ -20,6 +22,17 @@ export function recursive ( path ) {
 		for (let folder of current) {
 			r(join(path, folder))
 		}
+	}
+}
+
+export function getConfig ( path ) {
+	if (!existsSync(path)) return {}
+
+	try {
+		return JSON.parse(readFileSync(path))
+	} catch {
+		warn("malformed 4css.config.json")
+		return {}
 	}
 }
 
