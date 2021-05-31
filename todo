@@ -2,12 +2,15 @@
 	- sort files
 [ content ]
 	- resolve
-	- generate
+	- cli options (-c, -t)
+	- config file
+	- terser
 	- mixin declaration properties
 	- shortcuts
 	- svelte plugin
-	- shortcut properties/vars
+	- extend
 [ bugs ]
 [ misc ]
 	- more precise errors
 	- basic checks for selectors
+	? custom version display

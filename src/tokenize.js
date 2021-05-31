@@ -41,7 +41,7 @@ function createProperties ( lines, index, level ) {
 		} else if (line.startsWith("&")) {
 			if (!/^& *[^ ]+.*$/.test(line)) throw { message: "malformed extend stuff", lineNumber }
 
-			let selectors = /^& *(?<selectors>.+)$/.exec(line).groups.selectors
+			let [, selectors ] = /^& *(.+)$/.exec(line)
 
 			let { index: pIndex, properties: props } = createProperties(lines, index + 1, level + 1)
 			index = pIndex
@@ -54,19 +54,28 @@ function createProperties ( lines, index, level ) {
 				lineNumber
 			})
 		} else {
-			let match = /^(?<name>[a-z\-]+) *[: ] *(?<props>.+?);?$/gi.exec(line)?.groups
+			let match = /^([a-z\-]+) *[: ] *(.+?);?$|^(\$[a-z][a-z0-9]*)$/gi.exec(line)
 
 			if (!match) throw { message: "malformed property", lineNumber }
 
-			let { name, props } = match
-			props = props.trim().split(/ +/g)
-
-			property.push({
-				type: "Property",
-				name,
-				props,
-				lineNumber
-			})
+			let [, name, props, single ] = match
+			if (!single) {
+				props = props.trim().split(/ +/g)
+				
+				property.push({
+					type: "Property",
+					name,
+					props,
+					lineNumber
+				})
+			} else {
+				property.push({
+					type: "Property",
+					name: single.slice(1),
+					props: [ single ],
+					lineNumber
+				})
+			}
 
 			index++
 		}
