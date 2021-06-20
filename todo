@@ -1,16 +1,19 @@
 [ general ]
 	- sort files
 [ content ]
-	- resolve
-	- cli options (-c, -t)
-	- config file
-	- terser
-	- mixin declaration properties
 	- shortcuts
-	- svelte plugin
+	- svelte and rollup plugin
 	- extend
+	- handle mixins mixing themselves in
+	- built-in functions
+	- mixin and selector at the same time
+	- multiline comments
+	- validate
+	- @font-feature-values
+	- remove duplicate properties
+	- listen to added files
 [ bugs ]
 [ misc ]
 	- more precise errors
 	- basic checks for selectors
-	? custom version display
+	? cli: custom version display

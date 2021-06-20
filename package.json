@@ -1,21 +1,28 @@
 {
 	"name": "@m4rch/4css",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "a simple css compiler for a very specific custom type of css",
-	"author": "m4rch",
-	"main": "src/index.js",
 	"keywords": [
 		"m4rch",
 		"4css",
 		"css"
 	],
-	"bin": {
-		"@m4rch/4css": "bin/4css.js",
-		"4css": "bin/4css.js"
-	},
 	"license": "Unlicense",
+	"author": "m4rch",
 	"type": "module",
+	"exports": {
+		".": "./src/index.js",
+		"./handler": "./bin/handler.js"
+	},
+	"main": "src/index.js",
+	"bin": {
+		"4css": "bin/4css.js",
+		"@m4rch/4css": "bin/4css.js"
+	},
 	"dependencies": {
-		"sade": "^1.7.4"
+		"@iarna/toml": "^2.2.5",
+		"clean-css": "^5.1.2",
+		"sade": "^1.7.4",
+		"yaml": "^1.10.2"
 	}
 }

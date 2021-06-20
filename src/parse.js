@@ -1,15 +1,29 @@
-export default function parse ( flattened ) {
+function parser ( flattened, level ) {
 	let parsed = flattened.map(({ type, ...item }) => {
-		if (type == "Special") {
-			return `@${item.keyword} ${item.props};`
+		switch (type) {
+			case "RegularAt": {
+				return `${"\t".repeat(level)}@${item.name} ${item.rule};`
+			}
+			case "NestedAt": {
+				return [
+					`@${item.name}${item.rule ? ` ${item.rule}` : ""} {`,
+					parser(item.tokens, 1),
+					"}"
+				].join("\n")
+			}
+			case "Group": {
+				return [
+					item.selectors.map(( sel ) => "\t".repeat(level) + sel).join(",\n") + " {",
+					item.properties.map(({ name, props }) => `${"\t".repeat(level + 1)}${name}: ${props.join(" ")};`),
+					`${"\t".repeat(level)}}`
+				].flat().join("\n")
+			}
 		}
+	})
 
-		return [
-			item.selectors.join(",\n") + " {",
-			item.properties.map(({ name, props }) => `\t${name}: ${props.join(" ")};`),
-			"}"
-		].flat().join("\n")
-	}).join("\n\n") + "\n"
+	return parsed.join("\n\n")
+}
 
-	return parsed
+export default function parse ( flattened ) {
+	return parser(flattened, 0) + "\n"
 }

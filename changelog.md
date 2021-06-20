@@ -1,5 +1,20 @@
 # @m4rch/4css
 
+## v0.2.0
+
+*2021-06-02*
+
+- mixins with parameters
+- added nested @-rule support
+
+***
+
+- you may now specify the output directory
+- added option to minify the output
+  - added option to create a source-map
+- added option to read options from local config file
+  - supported types: json, toml, yaml
+
 ## v0.1.2
 
 *2021-06-01*
