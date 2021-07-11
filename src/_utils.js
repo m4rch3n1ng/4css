@@ -5,7 +5,7 @@ import toml from "@iarna/toml"
 import yaml from "yaml"
 
 export function findLastIndex ( array, fn ) {
-	let lastIndex = array.reverse().findIndex(fn)
+	let lastIndex = array.slice(0).reverse().findIndex(fn)
 
 	return !~lastIndex ? -1 : array.length - lastIndex - 1
 }

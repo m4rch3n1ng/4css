@@ -64,7 +64,7 @@ function resolveGroup ( group, top, args = {} ) {
 			}
 			case "Extend": {
 				extend.push(
-					resolveGroup(prop, top)
+					resolveGroup(prop, top, args)
 				)
 			}
 		}

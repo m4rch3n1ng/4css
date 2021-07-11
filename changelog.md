@@ -1,5 +1,12 @@
 # @m4rch/4css
 
+## v0.2.3
+
+*2021-07-11*
+
+- fix: parameter no longer get reversed (mixin)
+- fix: args now also work in extends (mixin)
+
 ## v0.2.2
 
 *2021-07-11*
