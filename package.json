@@ -1,6 +1,6 @@
 {
 	"name": "@m4rch/4css",
-	"version": "0.2.2",
+	"version": "0.2.4",
 	"description": "a simple css compiler for a very specific custom type of css",
 	"keywords": [
 		"m4rch",

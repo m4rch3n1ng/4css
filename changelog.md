@@ -1,5 +1,11 @@
 # @m4rch/4css
 
+## v0.2.4
+
+*2021-07-11*
+
+- fix: no longer tries to save json files
+
 ## v0.2.3
 
 *2021-07-11*
