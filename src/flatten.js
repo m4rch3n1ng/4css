@@ -1,6 +1,6 @@
 function flattenExtend ( extend, groupSelectors ) {
 	return extend.map(({ type, kind, selectors: extendSelectors, ...group }) => {
-		let selectors = groupSelectors.map(( gSel ) => extendSelectors.map(( eSel ) => `${gSel}${kind == "append" ? "" : " "}${eSel}`)).flat()
+		const selectors = groupSelectors.map(( gSel ) => extendSelectors.map(( eSel ) => `${gSel}${kind == "append" ? "" : " "}${eSel}`)).flat()
 
 		return {
 			type: "Group",
@@ -16,7 +16,7 @@ function flattenOnce ( resolved ) {
 	resolved.forEach(( item ) => {
 		switch (item.type) {
 			case "Group": {
-				let { extend, ...group } = item
+				const { extend, ...group } = item
 
 				flattened.push({
 					...group,
@@ -24,9 +24,9 @@ function flattenOnce ( resolved ) {
 				})
 
 				if (extend.length) {
-					let more = flattenExtend(extend, group.selectors)
+					const more = flattenExtend(extend, group.selectors)
 
-					flattened = flattened.concat(more)
+					flattened.push(...more)
 				}
 				break
 			}

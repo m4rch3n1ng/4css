@@ -1,5 +1,5 @@
 function parser ( flattened, level ) {
-	let parsed = flattened.map(({ type, ...item }) => {
+	const parsed = flattened.map(({ type, ...item }) => {
 		switch (type) {
 			case "RegularAt": {
 				return `${"\t".repeat(level)}@${item.name} ${item.rule};`

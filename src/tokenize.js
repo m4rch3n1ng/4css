@@ -4,9 +4,9 @@ function resolveMixinParameters ( unparsed, lineNumber ) {
 
 	let params = []
 
-	let parsed = unparsed.split(/\s+/g).map(( el ) => el.split(/\s*(,|=)\s*/)).flat().filter(( el ) => el.length)
+	const parsed = unparsed.split(/\s+/g).map(( el ) => el.split(/\s*(,|=)\s*/)).flat().filter(( el ) => el.length)
 	parsed.forEach(( param, i ) => {
-		let last = parsed[i - 1]
+		const last = parsed[i - 1]
 		if (!last && /[,=]/.test(param)) throw { message: `parameters may not start with ${param}`, lineNumber }
 
 		if (param.startsWith("$")) {
@@ -44,14 +44,14 @@ function createSelectors ( lines, index, level ) {
 
 function createProperties ( lines, index, level ) {
 	let property = []
-	let indentation = "\t".repeat(level)
+	const indentation = "\t".repeat(level)
 
 	while (lines[index] && lines[index].line.startsWith(indentation)) {
 		let { line, lineNumber } = lines[index]
 		line = line.trim()
 
 		if (line.startsWith("%")) {
-			let match = /^\% *([a-z][a-z0-9]*) *(\(.+\)|.+)? *$/i.exec(line)
+			const match = /^\% *([a-z][a-z0-9]*) *(\(.+\)|.+)? *$/i.exec(line)
 			if (!match) throw { message: "malformed mixin", lineNumber }
 
 			let [, name, args = "" ] = match
@@ -67,9 +67,9 @@ function createProperties ( lines, index, level ) {
 			index++
 		} else if (line.startsWith("&")) {
 			if (!/^& *[^ ]+.*$/.test(line)) throw { message: "malformed extend stuff", lineNumber }
-			let [, selectors ] = /^& *(.+)$/.exec(line)
+			const [, selectors ] = /^& *(.+)$/.exec(line)
 
-			let { index: pIndex, properties: props } = createProperties(lines, index + 1, level + 1)
+			const { index: pIndex, properties: props } = createProperties(lines, index + 1, level + 1)
 			index = pIndex
 
 			property.push({
@@ -80,12 +80,12 @@ function createProperties ( lines, index, level ) {
 				lineNumber
 			})
 		} else {
-			let match = /^([a-z\-]+) *[: ] *(.+?);?$|^(\$[a-z][a-z0-9]*)( +.+)?$/gi.exec(line)
+			const match = /^([a-z\-]+) *[: ] *(.+?);?$|^(\$[a-z][a-z0-9]*)( +.+)?$/gi.exec(line)
 			if (!match) throw { message: "malformed property", lineNumber }
 
-			let [, regular, regularProps, shortcut, shortcutProps ] = match
+			const [, regular, regularProps, shortcut, shortcutProps ] = match
 			if (!shortcut) {
-				let props = regularProps.trim().split(/ +/g)
+				const props = regularProps.trim().split(/ +/g)
 
 				property.push({
 					type: "Property",
@@ -94,7 +94,7 @@ function createProperties ( lines, index, level ) {
 					lineNumber
 				})
 			} else {
-				let props = shortcutProps?.trim() ? shortcutProps.trim().split(/ +/g) : []
+				const props = shortcutProps?.trim() ? shortcutProps.trim().split(/ +/g) : []
 
 				property.push({
 					type: "Property",
@@ -117,14 +117,14 @@ function createProperties ( lines, index, level ) {
 const regularAt = [ "charset", "import", "namespace" ]
 
 function createGroups ( lines, index, level ) {
-	let tokens = []
+	const tokens = []
 
 	while (index < lines.length && lines[index].line.startsWith("\t".repeat(level))) {
 		let { line, lineNumber } = lines[index]
 		line = line.slice(level)
 
 		if (/^\$/.test(line)) {
-			let match = /^(?<name>\$[a-z][a-z0-9]*)( *= *| +)(?<value>.+) *$/i.exec(line)?.groups
+			const match = /^(?<name>\$[a-z][a-z0-9]*)( *= *| +)(?<value>.+) *$/i.exec(line)?.groups
 			if (!match) throw { message: "malformed variable assignment", lineNumber }
 
 			tokens.push({
@@ -135,13 +135,13 @@ function createGroups ( lines, index, level ) {
 
 			index++
 		} else if (/^%/.test(line)) {
-			let match = /^\% *([a-z][a-z0-9]*) *([^()]+|\(.+\))? *$/i.exec(line)
+			const match = /^\% *([a-z][a-z0-9]*) *([^()]+|\(.+\))? *$/i.exec(line)
 			if (!match) throw { message: "malformed mixin declaration", lineNumber }
 
-			let [, name, params ] = match
-			let parameters = resolveMixinParameters(params)
+			const [, name, params ] = match
+			const parameters = resolveMixinParameters(params)
 
-			let { index: pIndex, properties } = createProperties(lines, index + 1, 1)
+			const { index: pIndex, properties } = createProperties(lines, index + 1, 1)
 			index = pIndex
 
 			tokens.push({
@@ -152,15 +152,15 @@ function createGroups ( lines, index, level ) {
 				lineNumber
 			})
 		} else if (/^@/.test(line)) {
-			let match = /^@([a-z\-]+)/i.exec(line)
+			const match = /^@([a-z\-]+)/i.exec(line)
 			if (!match) throw { message: "malformed @-rule", lineNumber }
 
-			let [, name ] = match
+			const [, name ] = match
 			if (regularAt.includes(name)) {
-				let rMatch = /^@[a-z\-]+ +(.+);?/i.exec(line)
+				const rMatch = /^@[a-z\-]+ +(.+);?\w*$/i.exec(line)
 				if (!rMatch) throw { message: "malformed @-rule", lineNumber }
 
-				let [, rule ] = rMatch
+				const [, rule ] = rMatch
 
 				tokens.push({
 					type: "RegularAt",
@@ -185,10 +185,10 @@ function createGroups ( lines, index, level ) {
 				})
 			}
 		} else {
-			let { index: sIndex, selectors } = createSelectors(lines, index, level)
+			const { index: sIndex, selectors } = createSelectors(lines, index, level)
 			index = sIndex
 
-			let { index: pIndex, properties } = createProperties(lines, index, level + 1)
+			const { index: pIndex, properties } = createProperties(lines, index, level + 1)
 			index = pIndex
 
 			tokens.push({
@@ -207,14 +207,14 @@ function createGroups ( lines, index, level ) {
 }
 
 export default function tokenize ( file ) {
-	let lines = file
+	const lines = file
 		.split(/\r?\n/g)
-		.map(( line ) => line.replace(/\/\/.+$/, ""))
+		.map(( line ) => line.replace(/\/\/(?=([^'"\\]*(\\.|("([^"\\]*\\.)*[^"\\]*"|'([^'\\]*\\.)*[^'\\]*')))*[^"']*$).*/, ""))
 		.map(( line ) => line.trimEnd())
 		.map(( line, number ) => ({ line, lineNumber: number + 1 }))
 		.filter(({ line }) => line)
 
-	let { tokens } = createGroups(lines, 0, 0)
+	const { tokens } = createGroups(lines, 0, 0)
 
 	return tokens
 }

@@ -1,5 +1,15 @@
 # @m4rch/4css
 
+## v0.2.1
+
+*2021-06-02*
+
+- fixed bug that deleted links
+
+***
+
+- let -> const
+
 ## v0.2.0
 
 *2021-06-02*

@@ -15,10 +15,10 @@ function resolveArgs ( params, args, lineNumber ) {
 }
 
 function resolveProperty ({ type, name, props, lineNumber }, top, args = {} ) {
-	let nName = lookup(name)
+	const nName = lookup(name)
 	props = props.map(( prop ) => {
 		if (/^\$/.test(prop)) {
-			let value = args[prop] || top.find(({ type, name: n }) => type == "VariableAssignment" && n == prop)?.value
+			const value = args[prop] || top.find(({ type, name: n }) => type == "VariableAssignment" && n == prop)?.value
 			if (!value) throw { message: `variable ${prop} does not exist`, lineNumber }
 
 			return value
@@ -34,10 +34,10 @@ function resolveProperty ({ type, name, props, lineNumber }, top, args = {} ) {
 }
 
 function resolveMixin ({ name, args, lineNumber }, top ) {
-	let mix = top.find(({ type, name: n }) => type == "MixinDeclaration" && n == name)
+	const mix = top.find(({ type, name: n }) => type == "MixinDeclaration" && n == name)
 	if (!mix) throw { message: `mixin ${name} does not exist.`, lineNumber }
 
-	let resolved = resolveArgs(mix.parameters, args, lineNumber)
+	const resolved = resolveArgs(mix.parameters, args, lineNumber)
 
 	return resolveGroup(mix, top, resolved).properties
 }
@@ -83,7 +83,7 @@ export default function resolve ( tokens, top ) {
 
 	let index = 0
 	while (index < tokens.length) {
-		let token = tokens[index]
+		const token = tokens[index]
 
 		switch (token.type) {
 			case "RegularAt": {
@@ -91,7 +91,7 @@ export default function resolve ( tokens, top ) {
 				break
 			}
 			case "NestedAt": {
-				let { tokens: nTokens, ...rest } = token
+				const { tokens: nTokens, ...rest } = token
 
 				resolved.push({
 					...rest,

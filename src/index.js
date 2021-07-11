@@ -4,10 +4,10 @@ import { default as flatten } from "./flatten.js"
 import { default as parse } from "./parse.js"
 
 export function compile ( file ) {
-	let tokens = tokenize(file)
-	let resolved = resolve(tokens)
-	let flattened = flatten(resolved)
-	let parsed = parse(flattened)
+	const tokens = tokenize(file)
+	const resolved = resolve(tokens)
+	const flattened = flatten(resolved)
+	const parsed = parse(flattened)
 
 	return parsed
 }
