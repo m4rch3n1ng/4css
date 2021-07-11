@@ -1,15 +1,13 @@
 import { lookup } from "./_lookup.js"
-import { warn } from "./_utils.js"
+import { findLastIndex, warn } from "./_utils.js"
 
 function resolveArgs ( params, args, lineNumber ) {
 	if (args.length > params.length) warn(`line: ${lineNumber}: expected ${params.length} arguments but got ${args.length}`)
+	const lastIndex = findLastIndex(params, ([, def ]) => !def)
+	if (~lastIndex && lastIndex + 1 > args.length) throw { message: `expected ${lastIndex + 1} arguments but got only ${args.length}`}
 
 	let resolved = {}
-	params.forEach(([ param, def ], i) => {
-		if (!def && !args[i]) throw { message: `expected ${i} or more arguments but got only ${args.length}`, lineNumber }
-
-		resolved[param] = args[i] || def
-	})
+	params.forEach(([ param, def ], i) => resolved[param] = args[i] || def)
 
 	return resolved
 }
@@ -39,7 +37,7 @@ function resolveMixin ({ name, args, lineNumber }, top ) {
 
 	const resolved = resolveArgs(mix.parameters, args, lineNumber)
 
-	return resolveGroup(mix, top, resolved).properties
+	return resolveGroup(mix, top, resolved)
 }
 
 function resolveGroup ( group, top, args = {} ) {
@@ -50,9 +48,10 @@ function resolveGroup ( group, top, args = {} ) {
 	properties.forEach(( prop ) => {
 		switch (prop.type) {
 			case "UseMixin": {
-				nProps = nProps.concat(
-					resolveMixin(prop, top)
-				)
+				const mixin = resolveMixin(prop, top)
+
+				nProps.push(...mixin.properties)
+				extend.push(...mixin.extend)
 
 				break
 			}

@@ -1,8 +1,19 @@
 # @m4rch/4css
 
+## v0.2.2
+
+*2021-07-11*
+
+- fix: mixin extends now get added
+- minor fix: error message now displays correctly, when not enough arguments are given to a mixin
+
+***
+
+- added more shortcuts
+
 ## v0.2.1
 
-*2021-06-02*
+*2021-07-11*
 
 - fixed bug that deleted links
 

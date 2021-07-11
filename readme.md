@@ -99,13 +99,16 @@ div
 
 ## lookup
 
-- mg: margin
-- pd: padding
-- cl: color
-- bg: background
 - bd: border
-- p: position
+- bd-r: border-radius
+- bg: background
+- cl: color
 - d: display
+- h: height
+- mg: margin
+- p: position
+- pd: padding
+- w: width
 
 # cli
 

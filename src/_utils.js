@@ -4,6 +4,12 @@ import CleanCSS from "clean-css"
 import toml from "@iarna/toml"
 import yaml from "yaml"
 
+export function findLastIndex ( array, fn ) {
+	let lastIndex = array.reverse().findIndex(fn)
+
+	return !~lastIndex ? -1 : array.length - lastIndex - 1
+}
+
 export function recursive ( path ) {
 	if (!existsSync(path) || !lstatSync(path).isDirectory()) return []
 

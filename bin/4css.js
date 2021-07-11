@@ -5,7 +5,7 @@ import handler from "./handler.js"
 
 sade("4css [dir] [out]")
 	.describe("compile 4css to valid css")
-	.version("v0.2.1")
+	.version("v0.2.2")
 	.option("-w, --watch", "listen for file change")
 	.option("-t, --terse", "minify css")
 	.option("-s, --source-map", "create sourcemap (only with --terse)")
